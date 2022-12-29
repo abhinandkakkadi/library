@@ -1,14 +1,15 @@
 let MyLibrary = [];
-
-function Book(title, author, pages, read) {
+index = 0;
+function Book(title, author, pages, read, remove) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.remove = remove;
 }
 
-function addBookToLibrary(title, author, pages, read) {
-  let book = new Book(title, author, pages, read);
+function addBookToLibrary(title, author, pages, read, remove) {
+  let book = new Book(title, author, pages, read, remove);
   MyLibrary.push(book);
 }
 
@@ -19,8 +20,21 @@ function displayBookOnPage() {
   MyLibrary.forEach((MyLibrary) => {
     const card = document.createElement("div");
     card.classList.add("card");
+    console.log(card);
     books.appendChild(card);
+
+    index++;
+
     for (let key in MyLibrary) {
+      if (key == "remove") {
+        const rm = document.createElement("button");
+        rm.classList.add("remove");
+        rm.textContent = `remove`;
+        card.appendChild(rm);
+
+        rm.onclick = function () {};
+        continue;
+      }
       if (key == "read") {
         const btn = document.createElement("button");
         btn.classList.add("button");
@@ -77,9 +91,10 @@ function addForm() {
   const author = form.elements.author.value;
   const pages = form.elements.pages.value;
   const read = document.getElementById("read").checked;
+  const remove = true;
   console.log(read.checked);
 
-  addBookToLibrary(title, author, pages, read);
+  addBookToLibrary(title, author, pages, read, remove);
   displayBookOnPage();
 
   console.log(MyLibrary);
